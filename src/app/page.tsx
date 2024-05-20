@@ -39,15 +39,15 @@ export default function Home() {
   ]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-full">
-        <h1 className="font-extrabold">COMIAS</h1>
-        <Accordion type="single" collapsible >
+    <main className="flex flex-col h-screen items-center justify-between p-24 gap-10">
+      <h1 className="font-extrabold">COMIAS</h1>
+      <div className="w-full flex-1 overflow-y-auto">
+        <Accordion type="single" collapsible className="">
           {
-            comias.map((comia) => {
+            [...comias, ...comias, ...comias, ...comias, ...comias, ...comias, ...comias].map((comia, index) => {
               return (
                 <>
-                  <AccordionItem value={comia.id} key={comia.id}>
+                  <AccordionItem value={String(index)} key={index}>
                     <AccordionTrigger>
                       <div className="flex gap-10">
                         {comia.name}
@@ -63,7 +63,9 @@ export default function Home() {
           }
         </Accordion>
       </div>
-      <Button>Añadir restaurante</Button>
+      <div>
+        <Button>Añadir restaurante</Button>
+      </div>
     </main>
   );
 }
