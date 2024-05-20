@@ -1,6 +1,14 @@
+import AddRestaurantDialog from "@/components/AddRestaurantDialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function Home() {
 
@@ -39,7 +47,7 @@ export default function Home() {
   ]
 
   return (
-    <main className="flex flex-col h-screen items-center justify-between p-24 gap-10">
+    <main className="flex flex-col h-screen items-center justify-between p-12 md:p-24 gap-10">
       <h1 className="font-extrabold">COMIAS</h1>
       <div className="w-full flex-1 overflow-y-auto">
         <Accordion type="single" collapsible className="">
@@ -64,7 +72,7 @@ export default function Home() {
         </Accordion>
       </div>
       <div>
-        <Button>Añadir restaurante</Button>
+        <AddRestaurantDialog />
       </div>
     </main>
   );
