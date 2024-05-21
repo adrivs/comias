@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -10,8 +12,46 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Calendar } from "./ui/calendar"
+
+
 
 const AddRestaurantDialog = () => {
+
+    const addRestaurantSchema = z.object({
+        restaurant: z.string().min(1, { message: "No lo dejes en blanco y escribe algo Joan" }),
+        date: z.date({ message: "Pon un día que sino no sabemos cuando vamos" })
+    })
+
+
+    const form = useForm<z.infer<typeof addRestaurantSchema>>({
+        resolver: zodResolver(addRestaurantSchema),
+        defaultValues: {
+            restaurant: "",
+            date: new Date()
+        },
+    })
+
+    const onSubmit = (values: z.infer<typeof addRestaurantSchema>) => {
+        // Do something with the form values.
+        // ✅ This will be type-safe and validated.
+        console.log(values)
+    }
+
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -24,17 +64,51 @@ const AddRestaurantDialog = () => {
                         ¿Dónde va a ser la próxima?
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                            Nombre
-                        </Label>
-                        <Input id="name" className="col-span-3" />
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button type="submit">Guardar</Button>
-                </DialogFooter>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <div className="grid gap-4 py-4">
+                            <FormField
+                                control={form.control}
+                                name="restaurant"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Restaurante</FormLabel>
+                                        <FormControl>
+                                            <Input  {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <div className="grid gap-4 py-4 w-full">
+                            <FormField
+                                control={form.control}
+                                name="date"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Fecha</FormLabel>
+                                        <FormControl>
+                                            <Calendar
+                                                mode="single"
+                                                selected={field.value}
+                                                onSelect={field.onChange}
+                                                disabled={(date) =>
+                                                    date < new Date()
+                                                }
+                                                initialFocus
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button type="submit">Guardar</Button>
+                        </DialogFooter>
+                    </form>
+                </Form>
             </DialogContent>
         </Dialog>
     )
