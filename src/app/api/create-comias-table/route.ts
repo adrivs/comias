@@ -2,8 +2,11 @@ import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-    try {
-        await sql`
+  try {
+
+    await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`;
+
+    await sql`
       CREATE TABLE IF NOT EXISTS places (
         id VARCHAR(255) PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -11,7 +14,7 @@ export async function GET(request: Request) {
       );
     `;
 
-        await sql`
+    await sql`
       CREATE TABLE IF NOT EXISTS coordinates (
         id SERIAL PRIMARY KEY,
         place_id VARCHAR(255) REFERENCES places(id) ON DELETE CASCADE,
@@ -20,7 +23,7 @@ export async function GET(request: Request) {
       );
     `;
 
-        await sql`
+    await sql`
       CREATE TABLE IF NOT EXISTS scores (
         id SERIAL PRIMARY KEY,
         place_id VARCHAR(255) REFERENCES places(id) ON DELETE CASCADE,
@@ -29,8 +32,8 @@ export async function GET(request: Request) {
       );
     `;
 
-        return NextResponse.json({ message: 'Tables created successfully' }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
-    }
+    return NextResponse.json({ message: 'Tables created successfully' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
 }

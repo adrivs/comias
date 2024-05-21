@@ -26,6 +26,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Calendar } from "./ui/calendar"
+import { format } from "date-fns"
 
 
 
@@ -45,10 +46,10 @@ const AddRestaurantDialog = () => {
         },
     })
 
-    const onSubmit = (values: z.infer<typeof addRestaurantSchema>) => {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof addRestaurantSchema>) => {
+        const formattedDate = format(values.date, 'yyyy-MM-dd HH:mm:ss');
+        await fetch(`/api/add-restaurant?restaurant=${values.restaurant}&date=${formattedDate}`)
+        form.reset()
     }
 
 
