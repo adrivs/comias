@@ -1,58 +1,24 @@
+import { sql } from "@vercel/postgres";
 import AddRestaurantDialog from "@/components/AddRestaurantDialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 
-export default function Home() {
+export const revalidate = 0;
 
-  const comias = [{
-    id: "1",
-    name: "Bendito Bocado Teatinos",
-    coordinates: ["36.72089516950159", "-4.47642083224042"],
-    scores: [
-      {
-        person: "Adrian",
-        score: 9
-      },
-      {
-        person: "Barkly",
-        score: 8.54
-      },
-    ],
-    date: new Date()
-  },
-  {
-    id: "2",
-    name: "Iñaki",
-    coordinates: ["36.72089516950159", "-4.47642083224042"],
-    scores: [
-      {
-        person: "Adrian",
-        score: 7
-      },
-      {
-        person: "Barkly",
-        score: 7
-      },
-    ],
-    date: new Date()
-  },
-  ]
+async function getRestaurants() {
+  const { rows } = await sql`SELECT * FROM RESTAURANTS;`;
+  return rows;
+}
+
+export default async function Home() {
+  const restaurants = await getRestaurants()
 
   return (
     <main className="flex flex-col h-screen items-center justify-between p-12 md:p-24 gap-10">
       <h1 className="font-extrabold">COMIAS</h1>
       <div className="w-full flex-1 overflow-y-auto">
-        <Accordion type="single" collapsible className="">
+        <Accordion type="single" collapsible>
           {
-            [...comias, ...comias, ...comias, ...comias, ...comias, ...comias, ...comias].map((comia, index) => {
+            restaurants.map((comia, index) => {
               return (
                 <>
                   <AccordionItem value={String(index)} key={index}>

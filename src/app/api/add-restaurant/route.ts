@@ -12,11 +12,11 @@ export async function GET(request: Request) {
         const parsedDate = parseISO(date);
         const formattedDate = format(parsedDate, 'yyyy-MM-dd HH:mm:ss');
 
-        await sql`INSERT INTO places (id, name, date) VALUES (uuid_generate_v4(), ${restaurant}, ${formattedDate}::TIMESTAMP);`;
+        await sql`INSERT INTO restaurants (id, name, date) VALUES (uuid_generate_v4(), ${restaurant}, ${formattedDate}::TIMESTAMP);`;
+        return NextResponse.json({ message: "Restaurante correctamente añadido" }, { status: 200 });
+
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });
     }
 
-    const places = await sql`SELECT * FROM places;`;
-    return NextResponse.json({ places }, { status: 200 });
 }
