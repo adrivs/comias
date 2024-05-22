@@ -26,16 +26,18 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body>
-          <SignedOut>
+          {/* <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <UserButton />
-            <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]">
-              {children}
+            <div className="flex w-full">
+              <UserButton />
             </div>
-          </SignedIn>
 
+          </SignedIn> */}
+          <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]">
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>
