@@ -1,5 +1,6 @@
 "use client"
 
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -10,49 +11,36 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 
-import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Calendar } from "./ui/calendar"
 import { format } from "date-fns"
 import { Plus } from "lucide-react"
-
-
+import { Restaurant, restaurantSchema } from "@/lib/validationSchemas/schemas"
 
 const AddRestaurantDialog = () => {
-
-    const addRestaurantSchema = z.object({
-        restaurant: z.string().min(1, { message: "No lo dejes en blanco y escribe algo Joan" }),
-        date: z.date({ message: "Pon un día que sino no sabemos cuando vamos" })
-    })
-
-
-    const form = useForm<z.infer<typeof addRestaurantSchema>>({
-        resolver: zodResolver(addRestaurantSchema),
+    const form = useForm<Restaurant>({
+        resolver: zodResolver(restaurantSchema),
         defaultValues: {
             restaurant: "",
             date: new Date()
         },
     })
 
-    const onSubmit = async (values: z.infer<typeof addRestaurantSchema>) => {
+    const onSubmit = async (values: Restaurant) => {
         const formattedDate = format(values.date, 'yyyy-MM-dd HH:mm:ss');
         await fetch(`/api/add-restaurant?restaurant=${values.restaurant}&date=${formattedDate}`)
         form.reset()
     }
-
 
     return (
         <Dialog>
