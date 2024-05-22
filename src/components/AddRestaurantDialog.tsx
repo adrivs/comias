@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Calendar } from "./ui/calendar"
 import { format } from "date-fns"
+import { Plus } from "lucide-react"
 
 
 
@@ -56,7 +57,7 @@ const AddRestaurantDialog = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>Añadir restaurante</Button>
+                <Button size="icon"><Plus /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
