@@ -45,7 +45,7 @@ const AddRestaurantDialog = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button size="icon"><Plus /></Button>
+                <Button size="icon" className="bg-slate-700 hover:bg-slate-800"><Plus /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
