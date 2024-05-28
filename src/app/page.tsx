@@ -3,6 +3,8 @@ import { currentUser } from '@clerk/nextjs/server';
 import AddRestaurantDialog from "@/components/AddRestaurantDialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { format } from "date-fns";
+import { Restaurant } from "@/lib/validationSchemas/schemas";
+import RestaurantCard from "@/components/RestaurantCard";
 
 export const revalidate = 0;
 
@@ -14,38 +16,20 @@ async function getRestaurants() {
 export default async function Home() {
   const restaurants = await getRestaurants()
   const user = await currentUser();
-
+  console.log("restaurants", restaurants)
 
   return (
-    <main className="p-12 md:p-24 h-screen">
-      <div className="flex items-center justify-center w-full  gap-10">
-        <h1 className="font-extrabold">COMIAS</h1>
-      </div>
-      <div className="mb-4">
+    <main className="p-12 w-full">
+      <div className="flex-col gap-4 flex w-1/3">
         <AddRestaurantDialog />
+        {
+          [...restaurants].map(({ name, date }, index) => {
+            return (
+              <RestaurantCard key={index} name={name} date={date} />
+            )
+          })
+        }
       </div>
-      <div className="flex gap-12">
-        <div className="flex-col w-1/2 gap-4 flex">
-          {
-            [...restaurants, ...restaurants, ...restaurants].map((restaurant, index) => {
-              const formattedDate = format(restaurant.date, 'dd/MM/yyyy');
-
-              return (
-                <div key={index} className="border border-black rounded-md p-4 flex justify-between">
-                  <span>
-                    {restaurant.name}
-                  </span>
-                  <span className="text-sm">{formattedDate}</span>
-                </div>
-              )
-            })
-          }
-        </div>
-        <div className="w-1/2 border border-black rounded-md">
-
-        </div>
-      </div>
-
     </main>
   );
 }

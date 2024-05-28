@@ -9,6 +9,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import { Beef } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +36,13 @@ export default function RootLayout({
             </div>
 
           </SignedIn> */}
-          <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]">
+          <div className="flex overflow-hidden">
+            <div className="h-screen px-12 border-r-2 border-slate-500 rounded-t-sm rounded-b-sm pt-8">
+              <div className="font-bold flex gap-4">
+                <Beef />
+                Comias
+              </div>
+            </div>
             {children}
           </div>
         </body>
