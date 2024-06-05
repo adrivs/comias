@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import React, { FC } from "react";
 
-interface RestaurantCardProps {
+export interface RestaurantCardProps {
     name: string;
     date: string;
 }
