@@ -10,6 +10,7 @@ import {
   UserButton
 } from '@clerk/nextjs'
 import { Beef } from "lucide-react";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,7 +44,9 @@ export default function RootLayout({
                 Comias
               </div>
             </div>
-            {children}
+            <ReactQueryProvider>
+              {children}
+            </ReactQueryProvider>
           </div>
         </body>
       </html>

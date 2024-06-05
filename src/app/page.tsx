@@ -1,8 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { currentUser } from '@clerk/nextjs/server';
-import AddRestaurantDialog from "@/components/AddRestaurantDialog";
 import { RestaurantCardProps } from "@/components/RestaurantCard";
-import RestaurantsList from "@/components/RestaurantsList";
 import RestaurantsLayout from "@/components/RestaurantsLayout";
 
 export const revalidate = 0;
