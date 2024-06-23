@@ -14,7 +14,7 @@ const RestaurantCard: FC<RestaurantCardProps> = ({ name, date, onSelectRestauran
     const formattedDate = format(date, 'dd/MM/yyyy');
 
     return (
-        <div className="border border-slate-500 rounded-md p-4 flex justify-between items-center hover:cursor-pointer" onClick={onSelectRestaurant}>
+        <div className="border border-slate-500 rounded-md p-4 flex flex-wrap justify-between items-center hover:cursor-pointer" onClick={onSelectRestaurant}>
             <span>
                 {name}
             </span>
